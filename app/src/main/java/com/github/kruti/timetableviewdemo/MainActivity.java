@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            case R.id.load_btn:
 
                 //for viewing the timetable even after app is killed (didn't work)
-                /*return SaveManager.updateData();*/
+               new SaveManager(this).updateData(SaveManager.COL1, SaveManager.COL2,SaveManager.COL3);
                Cursor cursor = new SaveManager(this).getAllContent();
                 Toast.makeText(this, "Data Successfully Loaded!", Toast.LENGTH_LONG).show();
                 break;
