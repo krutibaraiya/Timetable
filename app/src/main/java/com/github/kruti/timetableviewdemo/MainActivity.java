@@ -17,6 +17,10 @@ import com.github.kruti.timetableview.SaveManager;
 
 import java.util.ArrayList;
 
+import static com.github.kruti.timetableview.SaveManager.COL1;
+import static com.github.kruti.timetableview.SaveManager.COL2;
+import static com.github.kruti.timetableview.SaveManager.COL3;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -43,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final Cursor cursor;
         cursor = myDB.getAllContent();
         String [] columns = new String[] {
-                SaveManager.COL1,
+                COL1,
                 SaveManager.COL2,
                 SaveManager.COL3
         };
@@ -93,17 +97,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 timetable.removeAll();
                 break;
             case R.id.save_btn:
-            String COL1 = COL1.getText().toString();
-            String COL2 = COL2.getText().toString();
-            String COL3 = COL3.getText().toString();
 
-            SaveManager.addData(COL1,COL2, COL3);
+                //The following code didn't work for saving
+            /*String COL1 = COL1.cursor;
+            String COL2 = COL2.cursor;
+            String COL3 = COL3.cursor;
+
+            SaveManager.addData(COL1,COL2,COL3);
+                        or
+                SaveManager.insert(COL1,COL2,COL3);*/
+
 
                 Toast.makeText(this, "Data Successfully Inserted!", Toast.LENGTH_LONG).show();
+                break;
 
 
-            case R.id.load_btn:
-                return SaveManager.getAllContent();
+           case R.id.load_btn:
+
+                //for viewing the timetable even after app is killed (didn't work)
+                /*return SaveManager.updateData();*/
                 Toast.makeText(this, "Data Successfully Loaded!", Toast.LENGTH_LONG).show();
                 break;
 
