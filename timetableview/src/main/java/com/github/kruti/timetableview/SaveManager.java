@@ -15,9 +15,9 @@ public class SaveManager extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "mylist.db";
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_NAME = "mylist_data";
-    private static final String COL1 = "subject";
-    private static final String COL3 = "classroom";
-    private static final String COL2 = "professor";
+    public static final String COL1 = "subject";
+    public static final String COL2 = "classroom";
+   public static final String COL3 = "professor";
 
 
     public SaveManager(Context context) {

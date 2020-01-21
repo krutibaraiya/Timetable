@@ -2,6 +2,7 @@ package com.github.kruti.timetableviewdemo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -19,8 +20,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    public SQLiteDatabase SaveManager;
-    public SaveManager myDB;
+    SaveManager myDB;
     private Context context;
     public static final int REQUEST_ADD = 1;
     public static final int REQUEST_EDIT = 2;
@@ -31,15 +31,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button loadBtn;
 
     private TimetableView timetable;
-    public class SaveManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        myDB = new SaveManager(this);
-        myDB.openDataBase();
-        myDB.onCreate(SaveManager);
+        myDB= new SaveManager(this);
+
+
+        final Cursor cursor;
+        cursor = myDB.getAllContent();
+        String [] columns = new String[] {
+                SaveManager.COL1,
+                SaveManager.COL2,
+                SaveManager.COL3
+        };
 
         init();
     }
@@ -90,11 +97,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String COL2 = COL2.getText().toString();
             String COL3 = COL3.getText().toString();
 
-            timetable.addData(COL1,COL2,COL3);
+            SaveManager.addData(COL1,COL2, COL3);
+
+                Toast.makeText(this, "Data Successfully Inserted!", Toast.LENGTH_LONG).show();
 
 
             case R.id.load_btn:
-                return SaveManager.getListContents.db;
+                return SaveManager.getAllContent();
+                Toast.makeText(this, "Data Successfully Loaded!", Toast.LENGTH_LONG).show();
                 break;
 
 
@@ -128,13 +138,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-//adding data
-    public void addData(String item1 ) {
-
-        boolean addData = myDB.addData(item1);
-
-
-            Toast.makeText(this, "Data Successfully Inserted!", Toast.LENGTH_LONG).show();
-
-    }
 }
