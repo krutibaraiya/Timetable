@@ -37,19 +37,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TimetableView timetable;
 
 
+
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected  void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         myDB= new SaveManager(this);
 
 
-        final Cursor cursor;
-        cursor = myDB.getAllContent();
+        /*final Cursor cursor;*/
+        Cursor cursor = new SaveManager(this).getAllContent();
         String [] columns = new String[] {
                 COL1,
-                SaveManager.COL2,
-                SaveManager.COL3
+                COL2,
+                COL3
         };
 
         init();
@@ -99,13 +102,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.save_btn:
 
                 //The following code didn't work for saving
-            /*String COL1 = COL1.cursor;
-            String COL2 = COL2.cursor;
-            String COL3 = COL3.cursor;
 
-            SaveManager.addData(COL1,COL2,COL3);
-                        or
-                SaveManager.insert(COL1,COL2,COL3);*/
+
+            String COL1 = SaveManager.COL1;
+            String COL2 = SaveManager.COL2;
+            String COL3 = SaveManager.COL3;
+
+            new SaveManager(this).addData(COL1,COL2,COL3);
+
+               /* SaveManager.insert(COL1,COL2,COL3);*/
 
 
                 Toast.makeText(this, "Data Successfully Inserted!", Toast.LENGTH_LONG).show();
@@ -116,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //for viewing the timetable even after app is killed (didn't work)
                 /*return SaveManager.updateData();*/
+               Cursor cursor = new SaveManager(this).getAllContent();
                 Toast.makeText(this, "Data Successfully Loaded!", Toast.LENGTH_LONG).show();
                 break;
 
