@@ -12,23 +12,26 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SaveManager extends SQLiteOpenHelper {
 
 
-    public static  String DATABASE_NAME = "mylist.db";
-    public static  String TABLE_NAME = "mylist_data";
-    public static String COL1 = "subject";
-    public static  String COL2 = "classroom";
-    public static  String COL3 = "professor";
-
+    private static final String DATABASE_NAME = "mylist.db";
+    private static final int DATABASE_VERSION = 1;
+    private static final String TABLE_NAME = "mylist_data";
+    private static final String COL1 = "subject";
+    private static final String COL3 = "classroom";
+    private static final String COL2 = "professor";
 
 
     public SaveManager(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME , null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                " ITEM1 TEXT)";
-        db.execSQL(createTable);
+        db.execSQL("CREATE TABLE " + TABLE_NAME + "(" +
+                COL1 + " TEXT PRIMARY KEY, " +
+                COL2 + " TEXT, " +
+                COL3 + " TEXT)"
+        );
+
     }
 
     @Override
@@ -37,25 +40,33 @@ public class SaveManager extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addData(String item1 ) {
+    public boolean addData(String COL1 , String COL2, String COL3) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL1, "subject");
+        contentValues.put(COL2, "classroom");
+        contentValues.put(COL3, "professor");
+        db.insert(TABLE_NAME, null, contentValues);
+        return true;
+
+
+
+
+    }
+
+    public boolean updateData(String subject, String classroom,String professor) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL2, item1);
-
-
-        long result = db.insert(TABLE_NAME, null, contentValues);
-
-        //if date as inserted incorrectly it will return -1
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-    public Cursor getListContents(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-        return data;
+        contentValues.put(COL1, subject);
+        contentValues.put(COL2, classroom);
+        contentValues.put(COL3, professor);
+        db.update(TABLE_NAME, contentValues,COL1 + " = ? ",new String[]{ String.valueOf(COL1) });
+        return true;
     }
 
+    public Cursor getAllContent() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery( "SELECT * FROM " + TABLE_NAME, null );
+        return res;
+    }
 }
