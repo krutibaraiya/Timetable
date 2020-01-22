@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import static com.github.kruti.timetableview.SaveManager.COL1;
 import static com.github.kruti.timetableview.SaveManager.COL2;
 import static com.github.kruti.timetableview.SaveManager.COL3;
+import static com.github.kruti.timetableview.SaveManager.COL_ID;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -45,16 +46,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         myDB= new SaveManager(this);
+        //myDB.updateData(Integer.valueOf(COL_ID), COL1, COL2, COL3 );
 
 
         /*final Cursor cursor;*/
-        Cursor cursor = new SaveManager(this).getAllContent();
+        /*Cursor cursor = new SaveManager(this).getAllContent();
         String [] columns = new String[] {
                 COL1,
                 COL2,
                 COL3
-        };
+        };*/
 
+        final Cursor cursor= myDB.getAllContent();
+        String [] columns = new String[]{
+                COL1,
+                COL2,
+                COL3
+        };
         init();
     }
 
@@ -103,12 +111,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //The following code didn't work for saving
 
-
+            //Integer id = COL_ID;
             String COL1 = SaveManager.COL1;
             String COL2 = SaveManager.COL2;
             String COL3 = SaveManager.COL3;
 
-            new SaveManager(this).addData(COL1,COL2,COL3);
+            new SaveManager(this).insertData(COL1, COL2, COL3);
 
                /* SaveManager.insert(COL1,COL2,COL3);*/
 
@@ -120,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            case R.id.load_btn:
 
                 //for viewing the timetable even after app is killed (didn't work)
-               new SaveManager(this).updateData(SaveManager.COL1, SaveManager.COL2,SaveManager.COL3);
+
                Cursor cursor = new SaveManager(this).getAllContent();
                 Toast.makeText(this, "Data Successfully Loaded!", Toast.LENGTH_LONG).show();
                 break;
