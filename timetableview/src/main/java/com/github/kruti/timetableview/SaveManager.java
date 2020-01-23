@@ -7,7 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 
-
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class SaveManager extends SQLiteOpenHelper {
@@ -47,7 +48,7 @@ public class SaveManager extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String COL1 , String COL2, String COL3) {
+    public void insertData(String COL1 , String COL2, String COL3) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         //contentValues.put(COL_ID, id);
@@ -55,7 +56,7 @@ public class SaveManager extends SQLiteOpenHelper {
         contentValues.put(COL2, "classroom");
         contentValues.put(COL3, "professor");
         db.insert(TABLE_NAME, null, contentValues);
-        return true;
+
 
 
 
@@ -93,6 +94,9 @@ public class SaveManager extends SQLiteOpenHelper {
     public Cursor getAllContent() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery( "SELECT * FROM " + TABLE_NAME, null );
+
         return res;
     }
+
+
 }

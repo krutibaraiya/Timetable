@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import static com.github.kruti.timetableview.SaveManager.COL2;
+import static com.github.kruti.timetableview.SaveManager.COL3;
+
 public class TimetableView extends LinearLayout {
     private static final int DEFAULT_ROW_COUNT = 11;
     private static final int DEFAULT_COLUMN_COUNT = 7;
@@ -113,7 +116,7 @@ public class TimetableView extends LinearLayout {
     }
 
     /**
-     * date : 2019-02-08
+
      * get all schedules TimetableView has.
      */
     public ArrayList<Schedule> getAllSchedulesInStickers() {
@@ -127,7 +130,7 @@ public class TimetableView extends LinearLayout {
     }
 
     /**
-     * date : 2019-02-08
+
      * Used in Edit mode, To check a invalidate schedule.
      */
     public ArrayList<Schedule> getAllSchedulesInStickersExceptIdx(int idx) {
@@ -175,13 +178,15 @@ public class TimetableView extends LinearLayout {
         setStickerColor();
     }
 
-    /*public String createSaveData() {
-        return SaveManager.saveSticker(stickers);
-    }*/
+    /*public  String createSaveData() {
+        return SaveManager().getAllContent(stickers);
 
-    /*public void load(String data) {
+    }
+
+    public void load(String data) {
         removeAll();
-        stickers = SaveManager.loadSticker(data);
+
+        stickers = new SaveManager.insertData(SaveManager.COL1,COL2,COL3);
         int maxKey = 0;
         for (int key : stickers.keySet()) {
             ArrayList<Schedule> schedules = stickers.get(key).getSchedules();
@@ -368,7 +373,7 @@ public class TimetableView extends LinearLayout {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 
-    private void onCreateByBuilder(Builder builder) {
+    private void onCreateByBuilder(TimetableView builder) {
         this.rowCount = builder.rowCount;
         this.columnCount = builder.columnCount;
         this.cellHeight = builder.cellHeight;
@@ -380,6 +385,9 @@ public class TimetableView extends LinearLayout {
 
         init();
     }
+
+
+
 
 
     public interface OnStickerSelectedListener {
@@ -395,7 +403,7 @@ public class TimetableView extends LinearLayout {
         private String[] headerTitle;
         private String[] stickerColors;
         private int startTime;
-        private int headerHighlightColor;
+
 
         public Builder(Context context) {
             this.context = context;
@@ -406,7 +414,7 @@ public class TimetableView extends LinearLayout {
             headerTitle = context.getResources().getStringArray(R.array.default_header_title);
             stickerColors = context.getResources().getStringArray(R.array.default_sticker_color);
             startTime = DEFAULT_START_TIME;
-            /*headerHighlightColor = context.getResources().getColor(R.color.default_header_highlight_color);*/
+
         }
 
         public Builder setRowCount(int n) {
@@ -444,9 +452,9 @@ public class TimetableView extends LinearLayout {
             return this;
         }
 
-        public Builder setHeaderHighlightColor(int c) {
+        /*public Builder setHeaderHighlightColor(int c) {
             this.headerHighlightColor = c;
-            return this;
+            return this;*/
         }
 
         public TimetableView build() {
@@ -454,5 +462,5 @@ public class TimetableView extends LinearLayout {
             timetableView.onCreateByBuilder(this);
             return timetableView;
         }
-    }
+
 }

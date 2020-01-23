@@ -3,6 +3,7 @@ package com.github.kruti.timetableviewdemo;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -105,6 +106,14 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
                     startTv.setText(hourOfDay + ":" + minute);
                     schedule.getStartTime().setHour(hourOfDay);
                     schedule.getStartTime().setMinute(minute);
+
+                   long startTime= hourOfDay +((minute-10)/100);
+
+                    SharedPreferences preferences = getSharedPreferences("startTime", MODE_PRIVATE);
+                    preferences.edit().putLong("startTime", startTime).apply();
+
+
+
                 }
             };
         });
