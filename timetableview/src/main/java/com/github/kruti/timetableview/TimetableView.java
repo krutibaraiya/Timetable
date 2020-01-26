@@ -452,9 +452,7 @@ public class TimetableView extends LinearLayout {
             return this;
         }
 
-        /*public Builder setHeaderHighlightColor(int c) {
-            this.headerHighlightColor = c;
-            return this;*/
+
         }
 
         public TimetableView build() {
